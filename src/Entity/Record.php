@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RecordRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\CategoryRepository;
@@ -48,6 +50,14 @@ class Record
     #[ORM\ManyToOne(targetEntity: Category::class, fetch:"EAGER")]
     #[ORM\JoinColumn(nullable: false)]
     private $category;
+
+    #[ORM\OneToMany(mappedBy: 'record', targetEntity: Review::class)]
+    private $reviews;
+
+    public function __construct()
+    {
+        $this->reviews = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -108,5 +118,35 @@ class Record
                       ->setBand($post['band'])
                       ->setDate($post['date'])
                       ->setCategory($categoryRepository->find($post['category'])); 
+    }
+
+    /**
+     * @return Collection<int, Review>
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->setRecord($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): self
+    {
+        if ($this->reviews->removeElement($review)) {
+            // set the owning side to null (unless already changed)
+            if ($review->getRecord($review) === $this) {
+                $review->setRecord(null);
+            }
+        }
+
+        return $this;
     }
 }

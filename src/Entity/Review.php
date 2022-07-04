@@ -14,24 +14,28 @@ class Review
     private $id;
 
     #[ORM\Column(type: 'smallint')]
-    private $rate;
+    private $rating;
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $content;
+
+    #[ORM\ManyToOne(targetEntity: Record::class, inversedBy: 'reviews')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $record;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getRate(): ?int
+    public function getRating(): ?int
     {
-        return $this->rate;
+        return $this->rating;
     }
 
-    public function setRate(int $rate): self
+    public function setRating(int $rating): self
     {
-        $this->rate = $rate;
+        $this->rating = $rating;
 
         return $this;
     }
@@ -44,6 +48,19 @@ class Review
     public function setContent(?string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    static function getRecord(Review $review): ?Record
+    {   
+        $review = new Review;
+        return $review->record;
+    }
+
+    public function setRecord(?Record $record): self
+    {
+        $this->record = $record;
 
         return $this;
     }

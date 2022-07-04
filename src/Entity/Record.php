@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\RecordRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Repository\CategoryRepository;
 use DateTime;
 
 #[ORM\Entity(repositoryClass: RecordRepository::class)]
@@ -14,10 +15,11 @@ class Record
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
+    
     /**
      * @Assert\NotBlank(message="Please provide a title")
      * @Assert\Length(
-     *     min=1,
+     *     min=3,
      *     max=100,
      *     minMessage="The name must be at least 3 characters long",
      *     maxMessage="The name cannot be longer than 100 characters"
@@ -26,10 +28,11 @@ class Record
 
     #[ORM\Column(type: 'string', length: 100)]
     private $title;
-        /**
+
+    /**
      * @Assert\NotBlank(message="Please provide a title")
      * @Assert\Length(
-     *     min=1,
+     *     min=3,
      *     max=100,
      *     minMessage="The name must be at least 3 characters long",
      *     maxMessage="The name cannot be longer than 100 characters"
@@ -96,5 +99,14 @@ class Record
         $this->category = $category;
 
         return $this;
+    }
+
+    public function globalSetter(string $post, CategoryRepository $categoryRepository): Record
+    {   
+       $post = json_decode($post, true);
+        return $this->setTitle($post['title'])
+                      ->setBand($post['band'])
+                      ->setDate($post['date'])
+                      ->setCategory($categoryRepository->find($post['category'])); 
     }
 }

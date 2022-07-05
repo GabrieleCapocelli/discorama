@@ -17,7 +17,12 @@ class IndexController extends AbstractController
     {   
         try{
             $reviews = $reviewRepository->findAll();
-            return $this->json($reviews);
+            return $this->json(
+                                $reviews, 
+                                200, 
+                                ['Content-type: appliation/json'],
+                                ['circular_reference_handler' => function ($object) {return $object->getId();}]
+                            );
         }catch(PDOException $e){
             echo $this->json(['alert'=>$e->getMessage()]);
         }catch(Error $e){

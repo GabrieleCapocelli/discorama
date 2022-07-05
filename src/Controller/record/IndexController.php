@@ -17,7 +17,12 @@ class IndexController extends AbstractController
     {   
         try{
             $records = $recordRepository->findAll();
-            return $this->json($records);
+            return $this->json(
+                                $records,
+                                200, 
+                                ['Content-type: appliation/json'],
+                                ['circular_reference_handler' => function ($object) {return $object->getId();}]
+                            );
         }catch(PDOException $e){
             echo $this->json(['alert'=>$e->getMessage()]);
         }catch(Error $e){

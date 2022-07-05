@@ -26,8 +26,7 @@ class Review
 
     public function __construct()
     {   
-        $review = new Review;
-        $this->record = Review::getRecord($review);
+        $this->record = self::getRecord();
     }
 
     public function getId(): ?int
@@ -59,10 +58,9 @@ class Review
         return $this;
     }
 
-    static function getRecord(Review $review): Record
+    public function getRecord(): ?Record
     {   
-        $review = new Review;
-        return $review->record;
+        return $this->record;
     }
 
     public function setRecord(?Record $record): self

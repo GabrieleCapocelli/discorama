@@ -16,7 +16,12 @@ class ShowController extends AbstractController
     public function show(?Review $review): Response
     {   
         try{
-            return $this->json($review);
+            return $this->json(
+                                $review, 
+                                200, 
+                                ['Content-type: appliation/json'],
+                                ['circular_reference_handler' => function ($object) {return $object->getId();}]
+                            );
         }catch(PDOException $e){
             echo $this->json(['alert'=>$e->getMessage()]);
         }catch(Error $e){

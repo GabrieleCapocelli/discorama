@@ -5,7 +5,9 @@ namespace App\Controller\record;
 use App\Repository\RecordRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 use PDOException;
 use Error;
 
@@ -13,12 +15,17 @@ use Error;
 class IndexController extends AbstractController
 {
     #[Route('/', name: 'app_record_index', methods: ['GET'])]
-    public function index(RecordRepository $recordRepository): Response
+    public function index(PaginatorInterface $paginator, RecordRepository $recordRepository, Request $request): Response
     {   
         try{
+
+            $records =  $recordRepository->customFindAll();
+
+            $display = $paginator->paginate($records, $request->query->get('page', 1), 2); 
+
             $records = $recordRepository->customFindAll();
             return $this->json(
-                                $records,
+                                $display,
                                 200, 
                                 ['Content-type: application/json'],
                                 ['circular_reference_handler' => function ($object) {return $object->getId();}]

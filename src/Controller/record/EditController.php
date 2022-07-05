@@ -2,8 +2,6 @@
 
 namespace App\Controller\record;
 
-
-use App\Form\Record1Type;
 use App\Repository\RecordRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

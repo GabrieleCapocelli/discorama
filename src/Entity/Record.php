@@ -124,8 +124,8 @@ class Record
      * @return Collection<int, Review>
      */
     public function getReviews(): Collection
-    {
-        return $this->reviews;
+    {   
+        return $this->reviews;          
     }
 
     public function addReview(Review $review): self

@@ -20,7 +20,7 @@ class IndexController extends AbstractController
             return $this->json(
                                 $records,
                                 200, 
-                                ['Content-type: appliation/json'],
+                                ['Content-type: application/json'],
                                 ['circular_reference_handler' => function ($object) {return $object->getId();}]
                             );
         }catch(PDOException $e){

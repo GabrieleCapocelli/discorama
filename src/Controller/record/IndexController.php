@@ -16,7 +16,7 @@ class IndexController extends AbstractController
     public function index(RecordRepository $recordRepository): Response
     {   
         try{
-            $records = $recordRepository->findAll();
+            $records = $recordRepository->customFindAll();
             return $this->json(
                                 $records,
                                 200, 

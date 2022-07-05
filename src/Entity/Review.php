@@ -21,13 +21,7 @@ class Review
     private $content;
 
     #[ORM\ManyToOne(targetEntity: Record::class, inversedBy: 'reviews')]
-    #[ORM\JoinColumn(nullable: false)]
     private $record;
-
-    public function __construct()
-    {   
-        $this->record = self::getRecord();
-    }
 
     public function getId(): ?int
     {

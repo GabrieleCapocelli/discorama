@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ReviewRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\RecordRepository;
 
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
 class Review
@@ -22,6 +23,12 @@ class Review
     #[ORM\ManyToOne(targetEntity: Record::class, inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
     private $record;
+
+    public function __construct()
+    {   
+        $review = new Review;
+        $this->record = Review::getRecord($review);
+    }
 
     public function getId(): ?int
     {
@@ -52,7 +59,7 @@ class Review
         return $this;
     }
 
-    static function getRecord(Review $review): ?Record
+    static function getRecord(Review $review): Record
     {   
         $review = new Review;
         return $review->record;
@@ -63,5 +70,14 @@ class Review
         $this->record = $record;
 
         return $this;
+    }
+
+    public function globalSetter($post, RecordRepository $recordRepository)
+    {   
+        $data = json_decode($post, true);
+        return $this->setRating($data['rating'])
+                    ->setContent($data['content'])
+                    ->setRecord($recordRepository->find($data['record']));
+
     }
 }

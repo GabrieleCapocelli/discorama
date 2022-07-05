@@ -113,11 +113,11 @@ class Record
 
     public function globalSetter(string $post, CategoryRepository $categoryRepository): Record
     {   
-       $post = json_decode($post, true);
-        return $this->setTitle($post['title'])
-                      ->setBand($post['band'])
-                      ->setDate($post['date'])
-                      ->setCategory($categoryRepository->find($post['category'])); 
+       $data = json_decode($post, true);
+        return $this->setTitle($data['title'])
+                      ->setBand($data['band'])
+                      ->setDate($data['date'])
+                      ->setCategory($categoryRepository->find($data['category'])); 
     }
 
     /**

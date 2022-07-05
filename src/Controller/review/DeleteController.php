@@ -13,7 +13,7 @@ use Error;
 #[Route('/reviews')]
 class DeleteController extends AbstractController
 {
-    #[Route('/{id}', name: 'app_record_delete', methods: ['DELETE'])]
+    #[Route('/{id}', name: 'app_review_delete', methods: ['DELETE'])]
     public function delete(Review $review, ReviewRepository $reviewRepository): Response
     {   
         try{

@@ -2,7 +2,7 @@
 
 namespace App\Controller\review;
 
-use App\Repository\ReviewRepository;
+use App\Entity\Review;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,14 +10,13 @@ use PDOException;
 use Error;
 
 #[Route('/reviews')]
-class IndexController extends AbstractController
+class ShowController extends AbstractController
 {
-    #[Route('/', name: 'app_review_index', methods: ['GET'])]
-    public function index(ReviewRepository $reviewRepository): Response
+    #[Route('/{id}', name: 'app_review_show', methods: ['GET'])]
+    public function show(?Review $review): Response
     {   
         try{
-            $reviews = $reviewRepository->findAll();
-            return $this->json($reviews);
+            return $this->json($review);
         }catch(PDOException $e){
             echo $this->json(['alert'=>$e->getMessage()]);
         }catch(Error $e){

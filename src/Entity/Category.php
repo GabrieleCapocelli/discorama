@@ -43,8 +43,8 @@ class Category
 
     public function globalSetter(string $post): Category
     {   
-       $post = json_decode($post, true);
-        return $this->setLabel($post['label']); 
+       $data = json_decode($post, true);
+        return $this->setLabel($data['label']); 
     }
 
 }

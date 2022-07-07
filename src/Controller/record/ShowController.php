@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use PDOException;
 use Error;
 
-#[Route('/records')]
+#[Route('/api/records')]
 class ShowController extends AbstractController
 {
     #[Route('/{id}', name: 'app_record_show', methods: ['GET'])]

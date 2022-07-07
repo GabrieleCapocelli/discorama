@@ -14,7 +14,7 @@ use PDOException;
 use Error;
 
 
-#[Route('/categories')]
+#[Route('/api/categories')]
 class CreateController extends AbstractController
 {
     #[Route('/', name: 'app_category_new', methods: ['POST'])]

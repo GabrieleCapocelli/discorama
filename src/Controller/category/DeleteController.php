@@ -11,7 +11,7 @@ use PDOException;
 use Error;
 
 
-#[Route('/categories')]
+#[Route('/api/categories')]
 class DeleteController extends AbstractController
 {
     #[Route('/{id}', name: 'app_category_delete', methods: ['DELETE'])]

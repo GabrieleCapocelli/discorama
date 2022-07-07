@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use PDOException;
 use Error;
 
-#[Route('/reviews')]
+#[Route('/api/reviews')]
 class DeleteController extends AbstractController
 {
     #[Route('/{id}', name: 'app_review_delete', methods: ['DELETE'])]

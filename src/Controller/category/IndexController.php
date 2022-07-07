@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use PDOException;
 use Error;
 
-#[Route('/categories')]
+#[Route('/api/categories')]
 class IndexController extends AbstractController
 {
     #[Route('/', name: 'app_category_index', methods: ['GET'])]

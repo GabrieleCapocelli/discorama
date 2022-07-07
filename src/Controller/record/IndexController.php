@@ -11,7 +11,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use PDOException;
 use Error;
 
-#[Route('/records')]
+#[Route('/api/records')]
 class IndexController extends AbstractController
 {
     #[Route('/', name: 'app_record_index', methods: ['GET'])]
@@ -20,10 +20,8 @@ class IndexController extends AbstractController
         try{
 
             $records =  $recordRepository->customFindAll();
-
             $display = $paginator->paginate($records, $request->query->get('page', 1), 2); 
-
-            $records = $recordRepository->customFindAll();
+            // ?page= for chosing page
             return $this->json(
                                 $display,
                                 200, 

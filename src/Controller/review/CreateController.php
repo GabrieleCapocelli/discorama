@@ -14,7 +14,7 @@ use PDOException;
 use Error;
 
 
-#[Route('/reviews')]
+#[Route('/api/reviews')]
 class CreateController extends AbstractController
 {
     #[Route('/', name: 'app_review_new', methods: ['POST'])]

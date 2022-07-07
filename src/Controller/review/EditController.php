@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use PDOException;
 use Error;
 
-#[Route('/reviews')]
+#[Route('/api/reviews')]
 class EditController extends AbstractController
 {   
     #[Route('/{id}', name: 'app_review_edit', methods: ['PUT'])]

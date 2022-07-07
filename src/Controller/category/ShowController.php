@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use PDOException;
 use Error;
 
-#[Route('/categories')]
+#[Route('/api/categories')]
 class ShowController extends AbstractController
 {
     #[Route('/{id}', name: 'app_category_show', methods: ['GET'])]

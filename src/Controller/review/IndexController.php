@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use PDOException;
 use Error;
 
-#[Route('/api/api/reviews')]
+#[Route('/api/reviews')]
 class IndexController extends AbstractController
 {
     #[Route('/', name: 'app_review_index', methods: ['GET'])]

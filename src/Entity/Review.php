@@ -23,6 +23,9 @@ class Review
     #[ORM\ManyToOne(targetEntity: Record::class, inversedBy: 'reviews')]
     private $record;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'reviews')]
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,5 +74,17 @@ class Review
                     ->setContent($data['content'])
                     ->setRecord($recordRepository->find($data['record']));
 
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

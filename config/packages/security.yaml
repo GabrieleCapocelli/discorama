@@ -38,13 +38,10 @@ security:
         ROLE_ADMIN: ROLE_USER
 
     access_control:
-        - { path: ^/api/login_check, roles: IS_ANONIMOUSLY_AUTHENTICATED }
-        - { path: ^/api, roles: IS_FULL_AUTHENTICATED }
-        - { path: ^/api/records, roles: ROLE_USER, methods: 'GET' }
-        - { path: ^/api/records, roles: ROLE_ADMIN, methods: ['POST','PUT','DELETE'] }
-        - { path: ^/api/categories, roles: ROLE_USER, methods: 'GET' }
-        - { path: ^/api/categories, roles: ROLE_ADMIN, methods: ['POST','PUT','DELETE'] }
-        - { path: ^/api/reviews, roles: ROLE_USER }
+        - { path: ^/api/login_check, roles: IS_ANONYMOUSLY_AUTHENTICATED }
+        - { path: ^/api/records, roles: ROLE_ADMIN, methods: [POST,PUT,DELETE] }
+        - { path: ^/api/categories, roles: ROLE_ADMIN, methods: [POST,PUT,DELETE] }
+        - { path: ^/api/reviews, roles: ROLE_USER, methods: [POST,PUT,DELETE] }
 
 
 

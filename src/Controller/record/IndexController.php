@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
-use PDOException;
+use Exception;
 use Error;
 
 #[Route('/api/records')]
@@ -28,10 +28,10 @@ class IndexController extends AbstractController
                                 ['Content-type: application/json'],
                                 ['circular_reference_handler' => function ($object) {return $object->getId();}]
                             );
-        }catch(PDOException $e){
-            echo $this->json(['alert'=>$e->getMessage()]);
+        }catch(Exception $e){
+            return $this->json(['alert'=>$e->getMessage()]);
         }catch(Error $e){
-            echo $this->json(['alert'=>$e->getMessage()]);
+            return $this->json(['alert'=>$e->getMessage()]);
         }
         
     }

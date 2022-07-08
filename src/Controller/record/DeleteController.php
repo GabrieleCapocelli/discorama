@@ -9,7 +9,7 @@ use App\Entity\Review;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use PDOException;
+use Exception;
 use Error;
 
 #[Route('/api/records')]
@@ -22,12 +22,11 @@ class DeleteController extends AbstractController
             $review = new Review;
             $review->nullRecord($reviewRepository, $record);
             $recordRepository->remove($record, true);
-            $response = new Response('record deleted');
-            return $response; 
-        }catch(PDOException $e){
-            echo $this->json(['alert'=>$e->getMessage()]);
+            return new Response('record deleted');
+        }catch(Exception $e){
+            return $this->json(['alert'=>$e->getMessage()]);
         }catch(Error $e){
-            echo $this->json(['alert'=>$e->getMessage()]);
+            return $this->json(['alert'=>$e->getMessage()]);
         }
         
     }

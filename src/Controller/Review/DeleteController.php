@@ -7,7 +7,7 @@ use App\Repository\ReviewRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use PDOException;
+use Exception;
 use Error;
 
 
@@ -20,12 +20,11 @@ class DeleteController extends AbstractController
         try{
             $this->denyAccessUnlessGranted('REVIEW_DELETE',$review);
             $reviewRepository->remove($review, true);
-            $response = new Response('review deleted');
-            return $response;
-        }catch(PDOException $e){
-            echo $this->json(['alert'=>$e->getMessage()]);
+            return new Response('review deleted');
+        }catch(Exception $e){
+            return $this->json(['alert'=>$e->getMessage()]);
         }catch(Error $e){
-            echo $this->json(['alert'=>$e->getMessage()]);
+            return $this->json(['alert'=>$e->getMessage()]);
         }
         
     }

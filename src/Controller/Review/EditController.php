@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use PDOException;
+use Exception;
 use Error;
 
 #[Route('/api/reviews')]
@@ -36,10 +36,10 @@ class EditController extends AbstractController
             }
             $response->headers->set('Content-Type','application/json');
             return $response;
-        }catch(PDOException $e){
-            echo $this->json(['alert'=>$e->getMessage()]);
+        }catch(Exception $e){
+            return $this->json(['alert'=>$e->getMessage()]);
         }catch(Error $e){
-            echo $this->json(['alert'=>$e->getMessage()]);
+            return $this->json(['alert'=>$e->getMessage()]);
         }
         
     }

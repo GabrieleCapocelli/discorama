@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Controller\User;
+namespace App\Controller\SignIn;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use Error;
+use PDOException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use PDOException;
-use Error;
 
 
-#[Route('/api/users')]
+#[Route('/api/sign_in')]
 class CreateController extends AbstractController
 {
     #[Route('/', name: 'app_user_new', methods: ['POST'])]

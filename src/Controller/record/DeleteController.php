@@ -16,7 +16,7 @@ use Error;
 class DeleteController extends AbstractController
 {
     #[Route('/{id}', name: 'app_record_delete', methods: ['DELETE'])]
-    public function delete(Record $record, RecordRepository $recordRepository, Review $review, ReviewRepository $reviewRepository): Response
+    public function delete(Record $record, RecordRepository $recordRepository, ReviewRepository $reviewRepository): Response
     {   
         try{
             $review = new Review;

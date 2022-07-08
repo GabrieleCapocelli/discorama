@@ -23,7 +23,7 @@ class ReviewVoter extends Voter
     protected function supports(string $attribute, $subject): bool
     {
 
-        return in_array($attribute, [self::REVIEW_EDIT, self::REVIEW_DELETE, self::USER_EDIT, self::USER_DELETE])
+        return in_array($attribute, [self::REVIEW_EDIT, self::REVIEW_DELETE])
             && $subject instanceof \App\Entity\Review;
     }
 

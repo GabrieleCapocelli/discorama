@@ -24,11 +24,12 @@ class DeleteController extends AbstractController
             $review = new Review;
             $review->nullUser($reviewRepository, $user);
             $userRepository->remove($user, true);
-            return new Response('User deleted');
+            $response = new Response('User deleted');
+            return $response;
         }catch(PDOException $e){
-            echo $this->json(['alert'=>$e->getMessage()]);
+           return $this->json(['alert'=>$e->getMessage()]);
         }catch(Error $e){
-            echo $this->json(['alert'=>$e->getMessage()]);
+            return $this->json(['alert'=>$e->getMessage()]);
         }
     }
 }

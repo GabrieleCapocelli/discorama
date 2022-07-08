@@ -91,7 +91,7 @@ class Review
             ->setUser($userRepository->find($data['user']));
     }
 
-    private function nullRecord(ReviewRepository $reviewRepository, Record $record)
+    public function nullRecord(ReviewRepository $reviewRepository, Record $record)
     {
         $reviews = $reviewRepository->findBy(['record'=>$record->getId()]);
         foreach ($reviews as $review){

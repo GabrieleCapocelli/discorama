@@ -52,11 +52,11 @@ class UserVoter extends Voter
 
     protected function canDeleteUser(User $account, User $user, ): bool
     {
-        return $user === $account->getUser();
+        return $user === $account;
     }
 
     protected function canEditUser(User $account, User $user): bool
     {
-        return $user === $account->getUser();
+        return $user === $account;
     }
 }

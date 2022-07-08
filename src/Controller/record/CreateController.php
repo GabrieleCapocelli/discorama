@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\record;
+namespace App\Controller\Record;
 
 use App\Entity\Record;
 use App\Repository\CategoryRepository;

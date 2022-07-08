@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Controller\review;
+namespace App\Controller\Review;
 
 use App\Entity\Review;
 use App\Repository\ReviewRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\RecordRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,12 +19,12 @@ use Error;
 class CreateController extends AbstractController
 {
     #[Route('/', name: 'app_review_new', methods: ['POST'])]
-    public function new(Request $request, ReviewRepository $reviewRepository, RecordRepository $recordRepository, ValidatorInterface $validator): Response
+    public function new(UserRepository $userRepository, Request $request, ReviewRepository $reviewRepository, RecordRepository $recordRepository, ValidatorInterface $validator): Response
     {   
         try{
             $review = new Review;
             $review_post = $request->getContent();
-            $review->globalSetter($review_post, $recordRepository);
+            $review->globalSetter($review_post, $recordRepository, $userRepository);
             $violations = $validator->validate($review);
             if(count($violations)>0){
                 $response = new Response('invalid data');

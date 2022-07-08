@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\review;
+namespace App\Controller\Review;
 
 use App\Entity\Review;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -4,7 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ReviewRepository;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\RecordRepository;
+use App\Entity\Record;
+use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
 class Review
@@ -20,11 +21,11 @@ class Review
     #[ORM\Column(type: 'text', nullable: true)]
     private $content;
 
-    #[ORM\ManyToOne(targetEntity: Record::class, inversedBy: 'reviews')]
-    private $record;
-
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'reviews')]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     private $user;
+
+    #[ORM\ManyToOne(targetEntity: Record::class)]
+    private $record;
 
     public function getId(): ?int
     {
@@ -55,27 +56,6 @@ class Review
         return $this;
     }
 
-    public function getRecord(): ?Record
-    {   
-        return $this->record;
-    }
-
-    public function setRecord(?Record $record): self
-    {
-        $this->record = $record;
-
-        return $this;
-    }
-
-    public function globalSetter($post, RecordRepository $recordRepository)
-    {   
-        $data = json_decode($post, true);
-        return $this->setRating($data['rating'])
-                    ->setContent($data['content'])
-                    ->setRecord($recordRepository->find($data['record']));
-
-    }
-
     public function getUser(): ?User
     {
         return $this->user;
@@ -87,4 +67,42 @@ class Review
 
         return $this;
     }
+
+    public function getRecord(): ?Record
+    {
+        return $this->record;
+    }
+
+    public function setRecord(?Record $record): self
+    {
+        $this->record = $record;
+
+        return $this;
+    }
+
+    public function globalSetter($post, RecordRepository $recordRepository, UserRepository $userRepository)
+    {
+        $data = json_decode($post, true);
+        return $this->setRating($data['rating'])
+            ->setContent($data['content'])
+            ->setRecord($recordRepository->find($data['record']))
+            ->setUser($userRepository->find($data['user']));
+    }
+
+    public function nullRecord(ReviewRepository $reviewRepository, Record $record)
+    {
+        $reviews = $reviewRepository->findBy(['record'=>$record->getId()]);
+        foreach ($reviews as $review){
+            $review->setRecord(NULL);
+        }
+    }
+
+    public function nullUser(ReviewRepository $reviewRepository, User $user)
+    {
+        $reviews = $reviewRepository->findBy(['User'=>$user->getId()]);
+        foreach ($reviews as $review){
+            $review->setUser(NULL);
+        }
+    }
+
 }

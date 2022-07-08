@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\record;
+namespace App\Controller\Record;
 
 use App\Repository\RecordRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

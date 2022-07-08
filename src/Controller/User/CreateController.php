@@ -1,37 +1,37 @@
 <?php
 
-namespace App\Controller\Category;
+namespace App\Controller\User;
 
-use App\Entity\Category;
-use App\Form\Category1Type;
-use App\Repository\CategoryRepository;
+use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use PDOException;
 use Error;
 
 
-#[Route('/api/categories')]
+#[Route('/api/users')]
 class CreateController extends AbstractController
 {
-    #[Route('/', name: 'app_category_new', methods: ['POST'])]
-    public function new(Request $request, CategoryRepository $categoryRepository, ValidatorInterface $validator ): Response
-    {   
+    #[Route('/', name: 'app_user_new', methods: ['POST'])]
+    public function new(Request $request, UserRepository $userRepository, ValidatorInterface $validator, UserPasswordHasherInterface $hasher): Response
+    {
         try{
-            $category = new Category;
-            $category_post = $request->getContent();
-            $category->globalSetter($category_post);
-            $violations = $validator->validate($category);
+            $user = new User;
+            $user_post = $request->getContent();
+            $user->globalSetter($user_post, $hasher);
+            $violations = $validator->validate($user);
             if(count($violations)>0){
                 $response = new Response('invalid data');
                 $response->setStatusCode(400);
             }else{
-                $categoryRepository->add($category,true);
-                $response = new Response('category added');
-                $response->setStatusCode(200);
+                $userRepository->add($user,true);
+                $response = new Response('User added');
+                $response->setStatusCode(201);
             }
             $response->headers->set('Content-Type','application/json');
             return $response;
@@ -40,6 +40,6 @@ class CreateController extends AbstractController
         }catch(Error $e){
             echo $this->json(['alert'=>$e->getMessage()]);
         }
-        
-    }    
+
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\review;
+namespace App\Controller\Review;
 
 use App\Entity\Review;
 use App\Repository\ReviewRepository;
@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use PDOException;
 use Error;
 
+
 #[Route('/api/reviews')]
 class DeleteController extends AbstractController
 {
@@ -17,9 +18,10 @@ class DeleteController extends AbstractController
     public function delete(Review $review, ReviewRepository $reviewRepository): Response
     {   
         try{
+            $this->denyAccessUnlessGranted('REVIEW_DELETE',$review);
             $reviewRepository->remove($review, true);
             $response = new Response('review deleted');
-            return $response; 
+            return $response;
         }catch(PDOException $e){
             echo $this->json(['alert'=>$e->getMessage()]);
         }catch(Error $e){

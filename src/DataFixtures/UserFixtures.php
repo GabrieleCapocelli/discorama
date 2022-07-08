@@ -34,6 +34,16 @@ class UserFixtures extends Fixture
             "tuamadre"
             )
         );
+        $this->setReference('user1', $user);
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setEmail("gabbo@diolurdo.it");
+        $user->setPassword($this->userPasswordHasher->hashPassword(
+            $user,
+            "tuamadre"
+        )
+        );
         $manager->persist($user);
 
         $manager->flush();

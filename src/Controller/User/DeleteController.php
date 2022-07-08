@@ -17,20 +17,18 @@ use Error;
 class DeleteController extends AbstractController
 {
     #[Route('/{id}', name: 'app_user_delete', methods: ['DELETE'])]
-    public function delete(User $user, Review $review, ReviewRepository $reviewRepository, UserRepository $userRepository): Response
+    public function delete(User $user, ReviewRepository $reviewRepository, UserRepository $userRepository): Response
     {
         try{
             $this->denyAccessUnlessGranted('USER_DELETE',$user);
             $review = new Review;
             $review->nullUser($reviewRepository, $user);
             $userRepository->remove($user, true);
-            $response = new Response('User deleted');
-            return $response;
+            return new Response('User deleted');
         }catch(PDOException $e){
             echo $this->json(['alert'=>$e->getMessage()]);
         }catch(Error $e){
             echo $this->json(['alert'=>$e->getMessage()]);
         }
-
     }
 }

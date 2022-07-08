@@ -27,7 +27,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $password;
 
-    #[ORM\OneToMany(mappedBy: 'User', targetEntity: Review::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Review::class)]
     private $reviews;
 
     public function __construct()
@@ -83,7 +83,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
-    public function addRole(string $role){
+    public function addRole(string $role): array
+    {
         array_push($this->roles, $role);
         return $this->getRoles();
     }

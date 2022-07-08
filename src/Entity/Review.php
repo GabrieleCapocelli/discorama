@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ReviewRepository;
+use App\Repository\RecordRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Record;
 use App\Entity\User;
@@ -21,10 +23,10 @@ class Review
     #[ORM\Column(type: 'text', nullable: true)]
     private $content;
 
-    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy:'reviews')]
     private $user;
 
-    #[ORM\ManyToOne(targetEntity: Record::class)]
+    #[ORM\ManyToOne(targetEntity: Record::class, inversedBy: 'reviews')]
     private $record;
 
     public function getId(): ?int
@@ -89,19 +91,19 @@ class Review
             ->setUser($userRepository->find($data['user']));
     }
 
-    public function nullRecord(ReviewRepository $reviewRepository, Record $record)
+    private function nullRecord(ReviewRepository $reviewRepository, Record $record)
     {
         $reviews = $reviewRepository->findBy(['record'=>$record->getId()]);
         foreach ($reviews as $review){
-            $review->setRecord(NULL);
+            $review->setRecord(null);
         }
     }
 
     public function nullUser(ReviewRepository $reviewRepository, User $user)
     {
-        $reviews = $reviewRepository->findBy(['User'=>$user->getId()]);
+        $reviews = $reviewRepository->findBy(['user'=>$user->getId()]);
         foreach ($reviews as $review){
-            $review->setUser(NULL);
+            $review->setUser(null);
         }
     }
 

@@ -6,6 +6,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Security;
+use App\Entity\User;
 
 
 class ReviewVoter extends Voter
@@ -14,7 +15,7 @@ class ReviewVoter extends Voter
     public const REVIEW_DELETE = 'REVIEW_DELETE';
     public const USER_EDIT = 'USER_EDIT';
     public const USER_DELETE = 'USER_DELETE';
-    private $security;
+    private Security $security;
 
     public function  __construct(Security $security)
     {
@@ -41,38 +42,44 @@ class ReviewVoter extends Voter
         if($this->security->isGranted('ROLE_ADMIN')) return true;
 
         //check if review has an owner
-        if(false === $review->getUser()) return false;
+        if(false === $subject->getUser()) return false;
 
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case self::REVIEW_EDIT:
-                // logic to determine if the User can EDIT
-                return $this->canEdit($review, $user);
+                return $this->canEditReview($subject, $user);
                 break;
             case self::REVIEW_DELETE:
-                // logic to determine if the User can VIEW
-                return $this->canDelete($review, $user);
+                return $this->canDeleteReview($subject, $user);
                 break;
             case self::USER_EDIT:
-                // logic to determine if the User can EDIT
-                return $this->canEdit($user, $user);
+                return $this->canEditUser($subject, $user);
                 break;
             case self::USER_DELETE:
-                // logic to determine if the User can VIEW
-                return $this->canDelete($user, $user);
+                return $this->canDeleteUser($subject, $user);
                 break;
         }
 
         return false;
     }
 
-    protected function canEdit(Review $subject, User $user): bool
+    protected function canDeleteReview(Review $review, User $user, ): bool
     {
-        return $user === $subject->getUser();
+        return $user === $review->getUser();
     }
 
-    protected function canDelete(Review $subject, User $user): bool
+    protected function canEditReview(Review $review, User $user): bool
     {
-        return $user === $subject->getUser();
+        return $user === $review->getUser();
+    }
+
+    protected function canDeleteUser($account, User $user, ): bool
+    {
+        return $user === $account->getUser();
+    }
+
+    protected function canEditUser($account, User $user): bool
+    {
+        return $user === $account->getUser();
     }
 }

@@ -16,8 +16,8 @@ use Error;
 
 #[Route('/api/reviews')]
 class EditController extends AbstractController
-{   
-    #[Route('/{id}', name: 'app_review_edit', methods: ['PUT'])]
+{
+    #[Route('/{id}', name: 'app_review_delete', methods: ['PUT'])]
     public function edit(Review $review, Request $request, $id, ReviewRepository $reviewRepository, RecordRepository $recordRepository, UserRepository $userRepository, ValidatorInterface $validator): Response
     {   
         try{

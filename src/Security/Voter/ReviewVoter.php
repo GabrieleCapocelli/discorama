@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Security;
 use App\Entity\User;
+use App\Entity\Review;
 
 
 class ReviewVoter extends Voter

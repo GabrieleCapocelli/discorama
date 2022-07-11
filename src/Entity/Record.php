@@ -27,7 +27,6 @@ class Record
      *     maxMessage="The name cannot be longer than 100 characters"
      * )
      */
-
     #[ORM\Column(type: 'string', length: 100)]
     public $title;
 

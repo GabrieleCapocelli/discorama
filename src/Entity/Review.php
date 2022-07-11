@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ReviewRepository;
 use App\Repository\RecordRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,9 +16,22 @@ class Review
     #[ORM\Column(type: 'integer')]
     public $id;
 
+    /**
+     * @Assert\Renge(
+     *     min=1,
+     *     max=5
+     * )
+     */
     #[ORM\Column(type: 'smallint')]
     public $rating;
 
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min=3,
+     *     max=10000
+     * )
+     */
     #[ORM\Column(type: 'text', nullable: true)]
     public $content;
 

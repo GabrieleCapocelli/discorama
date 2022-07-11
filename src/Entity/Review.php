@@ -6,8 +6,6 @@ use App\Repository\ReviewRepository;
 use App\Repository\RecordRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Record;
-use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
 class Review
@@ -15,19 +13,19 @@ class Review
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    public $id;
 
     #[ORM\Column(type: 'smallint')]
-    private $rating;
+    public $rating;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    private $content;
+    public $content;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy:'reviews')]
-    private $user;
+    public $user;
 
     #[ORM\ManyToOne(targetEntity: Record::class, inversedBy: 'reviews')]
-    private $record;
+    public $record;
 
     public function getId(): ?int
     {

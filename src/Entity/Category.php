@@ -13,10 +13,10 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    public $id;
 
     #[ORM\Column(type: 'string', length: 30)]
-    private $label;
+    public $label;
 
 
     public function __construct()

@@ -16,7 +16,7 @@ class Record
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    public $id;
     
     /**
      * @Assert\NotBlank(message="Please provide a title")
@@ -29,7 +29,7 @@ class Record
      */
 
     #[ORM\Column(type: 'string', length: 100)]
-    private $title;
+    public $title;
 
     /**
      * @Assert\NotBlank(message="Please provide a title")
@@ -41,18 +41,18 @@ class Record
      * )
      */
     #[ORM\Column(type: 'string', length: 100)]
-    private $band;
+    public $band;
     
    
     #[ORM\Column(type: 'date')]
-    private $date;
+    public $date;
 
     #[ORM\ManyToOne(targetEntity: Category::class, fetch:"EAGER")]
     #[ORM\JoinColumn(nullable: false)]
-    private $category;
+    public $category;
 
     #[ORM\OneToMany(mappedBy: 'record', targetEntity: Review::class)]
-    private $reviews;
+    public $reviews;
 
     public function __construct()
     {

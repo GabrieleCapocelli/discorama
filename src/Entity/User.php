@@ -16,19 +16,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    public $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
-    private $email;
+    public $email;
 
     #[ORM\Column(type: 'json')]
-    private $roles = [];
+    public $roles = [];
 
     #[ORM\Column(type: 'string')]
-    private $password;
+    public $password;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Review::class)]
-    private $reviews;
+    public $reviews;
 
     public function __construct()
     {

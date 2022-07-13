@@ -40,14 +40,15 @@ class RecordRepository extends ServiceEntityRepository
     }
 
     public function customFindAll()
-    {   
-        return $this->createQueryBuilder('a')
-                    ->leftJoin('a.reviews', 'c')
-                    ->innerJoin('a.category', 'b')
-                    ->select('a.id,a.title,a.band,a.date,b.label as category,avg(c.rating) as mediumRating')
-                    ->groupBy('a.id')
-                    ->getQuery()
-                    ->getResult();
+    {
+        $query = $this->createQueryBuilder('a')
+            ->leftJoin('a.reviews', 'c')
+            ->innerJoin('a.category', 'b')
+            ->select('a.id, a.title, a.band, a.date, b.label as category, avg(c.rating) as mediumRating')
+            ->groupBy('a.id')
+            ->getQuery()
+            ->getResult();
+        return $query;
     }
 
 //    /**

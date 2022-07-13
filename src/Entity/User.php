@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use ContainerFW5ZYts\getForm_TypeExtension_CsrfService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,7 +21,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public $id;
 
     /**
-     *  @Assert\Email(message="tua madre")
+     *  @Assert\Email()
     */
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     public $email;

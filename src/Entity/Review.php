@@ -17,7 +17,7 @@ class Review
     public $id;
 
     /**
-     * @Assert\Renge(
+     * @Assert\Range(
      *     min=1,
      *     max=5
      * )

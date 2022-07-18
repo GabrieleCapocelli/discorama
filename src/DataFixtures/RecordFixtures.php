@@ -9,7 +9,15 @@ use App\Entity\Record;
 class RecordFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
-    {   
+    {
+        $genericRecord = new Record;
+        $genericRecord->setTitle('generic');
+        $genericRecord->setBand('generic');
+        $genericRecord->setDate('0000-00-00');
+        $category = $this->getReference('generic');
+        $genericRecord->setCategory($category);
+        $manager->persist($genericRecord);
+
         $record = new Record;
         $record->setTitle('Appetite for destruction');
         $record->setBand('Guns n Roses');
@@ -18,7 +26,7 @@ class RecordFixtures extends Fixture
         $record->setCategory($category);
         $manager->persist($record);
         $this->setReference('appetite', $record);
-        $records[] = $record;
+
         $record = new Record;
         $record->setTitle('Mezzanine');
         $record->setBand('Massive Attack');
@@ -27,6 +35,7 @@ class RecordFixtures extends Fixture
         $record->setCategory($category);
         $manager->persist($record);
         $this->setReference('mezzanine', $record);
+
         $manager->flush();
        
     }

@@ -20,7 +20,7 @@ class DeleteController extends AbstractController
     {   
         try{
             $review = new Review;
-            $review->nullRecord($reviewRepository, $record);
+            $review->genericRecord($reviewRepository, $record, $recordRepository);
             $recordRepository->remove($record, true);
             return new Response('record deleted');
         }catch(Exception $e){

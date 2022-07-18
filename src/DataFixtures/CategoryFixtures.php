@@ -10,14 +10,21 @@ class CategoryFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $categorie = new Category;
-        $categorie->setLabel('rock');
-        $manager->persist($categorie);
-        $this->setReference('rock', $categorie);
-        $categorie = new Category;
-        $categorie->setLabel('trip-hop');
-        $manager->persist($categorie);
-        $this->setReference('trip-hop', $categorie);
+        $genericCategory = new Category;
+        $genericCategory->setLabel('generic');
+        $manager->persist($genericCategory);
+        $this->setReference('generic', $genericCategory);
+
+        $category = new Category;
+        $category->setLabel('rock');
+        $manager->persist($category);
+        $this->setReference('rock', $category);
+
+        $category = new Category;
+        $category->setLabel('trip-hop');
+        $manager->persist($category);
+        $this->setReference('trip-hop', $category);
+
         $manager->flush();
     }
 }

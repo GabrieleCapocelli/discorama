@@ -17,6 +17,15 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        $anonymous = new User();
+        $anonymous->setEmail('anonymous');
+        $anonymous->setPassword($this->userPasswordHasher->hashPassword(
+            $anonymous,
+            ""
+        )
+        );
+        $manager->persist($anonymous);
+
         $user = new User();
         $user->setEmail("gabbo@porcoddio.it");
         $user->addRole('ROLE_ADMIN');

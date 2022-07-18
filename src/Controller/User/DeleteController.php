@@ -22,7 +22,7 @@ class DeleteController extends AbstractController
         try{
             $this->denyAccessUnlessGranted('USER_DELETE',$user);
             $review = new Review;
-            $review->nullUser($reviewRepository, $user);
+            $review->anonymizeUser($reviewRepository, $user, $userRepository);
             $userRepository->remove($user, true);
            return new Response('User deleted');
         }catch(PDOException $e){

@@ -103,19 +103,19 @@ class Review
             ->setUser($userRepository->find($data['user']));
     }
 
-    public function nullRecord(ReviewRepository $reviewRepository, Record $record)
+    public function genericRecord(ReviewRepository $reviewRepository, Record $record, RecordRepository $recordRepository)
     {
         $reviews = $reviewRepository->findBy(['record'=>$record->getId()]);
         foreach ($reviews as $review){
-            $review->setRecord(null);
+            $review->setRecord($recordRepository->findOneBy(['id'=>1]));
         }
     }
 
-    public function nullUser(ReviewRepository $reviewRepository, User $user)
+    public function anonymizeUser(ReviewRepository $reviewRepository, User $user, UserRepository $userRepository)
     {
         $reviews = $reviewRepository->findBy(['user'=>$user->getId()]);
         foreach ($reviews as $review){
-            $review->setUser(null);
+            $review->setUser($userRepository->findOneBy(['id'=>1]));
         }
     }
 

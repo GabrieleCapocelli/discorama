@@ -24,7 +24,12 @@ security:
         api:
             pattern:   ^/api
             stateless: true
-            jwt: ~
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+#            jwt: ~
+#            refresh_jwt:
+#                check_path: /api/token/refresh # or, you may use the `api_refresh_token` route name
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -39,6 +44,7 @@ security:
 
     access_control:
         - { path: ^/api/login_check, roles: IS_ANONYMOUSLY_AUTHENTICATED }
+        - { path: ^/api/(login|token/refresh), roles: IS_ANONYMOUSLY_AUTHENTICATED }
         - { path: ^/api/records, roles: ROLE_ADMIN, methods: [POST,PUT,DELETE] }
         - { path: ^/api/categories, roles: ROLE_ADMIN, methods: [POST,PUT,DELETE] }
         - { path: ^/api/reviews, roles: ROLE_USER, methods: [POST,PUT,DELETE] }

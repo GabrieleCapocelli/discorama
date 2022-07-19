@@ -148,5 +148,4 @@ class Record
 
         return $this;
     }
-
 }
